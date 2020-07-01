@@ -62,3 +62,26 @@ With these four buttons, you can perform six possible actions:
 5. Empty Tank -> sets pressure of the the tank to 0
 6. Pop Tank + Empty Tank -> sets pressure of the tank to 5
 
+### Matrix (Raspberry Pi 4)
+
+The matrix composed of 4x4 LEDs represents a football match indicator (most likely) in
+[Klabzubova Jedenácka](https://cs.wikipedia.org/wiki/Klapzubova_jeden%C3%A1ctka_(kniha)) long-term game made
+for my beloved Sluníčkas Scout troop.
+The matrix order is in 4 groups representing rows, where each element in the group represents columns; see the
+following schema:
+```
+    1 2 3 4
+    
+a   B R Y G     B - blue
+b   B R Y G     R - red
+c   B R Y G     Y - yellow
+d   B R Y G     G - green
+```
+
+#### Control
+
+Control is done with SSH between a smartphone and the Raspberry Pi.
+When the control program runs, the following 3 information must be inputted:
+1. Command -- Turn on, Turn off, Turn everything off
+2. Group (row)
+3. Index (column)
