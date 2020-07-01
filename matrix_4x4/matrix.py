@@ -36,6 +36,10 @@ group_C = [24, 10,  9, 25]
 group_D = [11,  8,  7,  0]
 groups = [group_A, group_B, group_C, group_D]
 
+# Maximum of one blue LED can be turned on, since it takes 11 mA of current.
+# I am too lazy to add an additional resistor.
+blue_leds = [2, 17, 24, 11]
+blue_on = -1
 
 import RPi.GPIO as GPIO
 import time
@@ -81,15 +85,30 @@ def run():
             print("Index mistake.")
             continue
         
-        func(g[i - 1])
+        if not func(g[i - 1]):
+            print("Cannot turn on LED.")
+            continue
 
 
 def turn_on(gpio):
+    global blue_on
+    global blue_leds
+    if gpio in blue_leds:
+        if blue_on > -1:
+            return False
+        else:
+            blue_on = gpio
     GPIO.output(gpio, GPIO.HIGH)
+    return True
 
 
 def turn_off(gpio):
+    global blue_on
+    global blue_leds
+    if gpio in blue_leds and blue_on == gpio:
+        blue_on = -1
     GPIO.output(gpio, GPIO.LOW)
+    return True
 
 
 def test():
